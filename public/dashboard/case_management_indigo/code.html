@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel AML - Case Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#23005c",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-surface-variant": "#464555",
+                        "outline-variant": "#c7c4d8",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#6b38d4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#93e8ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#dad7ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#006a7c",
+                        "tertiary-fixed": "#acedff",
+                        "surface-dim": "#d8dadc",
+                        "surface-tint": "#4d44e3",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#8455ef",
+                        "inverse-surface": "#2d3133",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#e9ddff",
+                        "on-background": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#fffbff",
+                        "outline": "#777587",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#3525cd",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-container": "#4f46e5",
+                        "surface-container-low": "#f2f4f6",
+                        "background": "#f7f9fb",
+                        "tertiary": "#00505f",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-fixed": "#e2dfff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-micro-gradient {
+            background: linear-gradient(15deg, #3525cd, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-micro-gradient {
+            background: linear-gradient(15deg, #3525cd, #4f46e5);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-40 bg-slate-50/80 backdrop-blur-xl flex justify-between items-center h-16 px-6 w-full">
+<div class="flex items-center gap-8">
+<span class="text-lg font-bold tracking-tighter text-indigo-700">Sentinel AML</span>
+<div class="hidden md:flex items-center bg-slate-100 px-3 py-1.5 rounded-lg gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-sans tracking-tight text-slate-600 placeholder-slate-400 w-64" placeholder="Search investigations..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-indigo-100 overflow-hidden ml-2">
+<img alt="User Profile" data-alt="professional portrait of a financial analyst in a modern office environment with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwLsjIu8oP_TJaHbzyPwF4rub29kSKIECZeqN18vIcJegbMD9daRcrKzBWJJIXJwcQTskJ949qtLCNT5MElD8Yk1GgmvbIltzwE5kcdpIooFQ1CYvIzBaLd4JzxeKzEBOR1OqlgU3utjPKZikrF8wGHz_WA84EJIYAE2P2L0lHaVVKiGX9gciXCEecQG6f8gB3glqqZC_1WfZMLLQgHjFvZYbWVZoSFEGHXl_iu1-hDVraroDzEkIa3lPcpcou3gIQzK72P53IJMc"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-slate-50 flex flex-col py-6 px-4 gap-2 hidden md:flex">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-micro-gradient rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h1 class="text-sm font-bold tracking-tight text-on-surface">Sentinel AML</h1>
+<p class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">The Ethereal Ledger</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 grow">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">dashboard</span> Overview
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">monitor_heart</span> Live Monitoring
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">hub</span> Network Analysis
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">psychology</span> Behavioral Analysis
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">notifications_active</span> Alerts
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-indigo-700 font-bold border-r-2 border-indigo-600 bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span> Case Management
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">assessment</span> Reports
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</div>
+<div class="flex flex-col gap-1 pt-6 border-t border-slate-100">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">help</span> Help Center
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined">logout</span> Log Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 pb-12 px-8 min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
+<div>
+<nav class="flex items-center gap-2 mb-2">
+<span class="text-xs font-medium text-on-surface-variant uppercase tracking-widest">Investigations</span>
+<span class="material-symbols-outlined text-xs text-outline">chevron_right</span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">Case Management</span>
+</nav>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface -ml-0.5">Active Investigations</h2>
+<p class="text-on-surface-variant text-sm mt-1 max-w-lg">Manage, prioritize, and assign high-risk financial activities flagged by the Sentinel detection engine.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-highest text-primary font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-surface-container-high transition-colors">
+                    Export Ledger
+                </button>
+<button class="bg-micro-gradient text-on-primary font-semibold text-sm px-5 py-2.5 rounded-lg shadow-sm hover:shadow-md transition-all active:scale-95">
+                    Initialize New Case
+                </button>
+</div>
+</header>
+<!-- Metrics Tonal Row (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col justify-between h-32">
+<span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.15em]">Total Active</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight">142</span>
+<span class="text-tertiary font-bold text-xs">+12%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col justify-between h-32">
+<span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.15em]">Critical Risk</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight text-error">28</span>
+<span class="text-error font-bold text-xs">High</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/4"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col justify-between h-32">
+<span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.15em]">Avg. Resolution</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight">4.2<span class="text-lg font-medium text-on-surface-variant">d</span></span>
+<span class="text-tertiary font-bold text-xs">-0.5d</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-3/4"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl flex flex-col justify-between h-32">
+<span class="text-on-surface-variant text-[10px] font-bold uppercase tracking-[0.15em]">Unassigned</span>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold tracking-tight">9</span>
+<span class="text-on-surface-variant font-bold text-xs italic">Review</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/6"></div>
+</div>
+</div>
+</div>
+<!-- Table Filters -->
+<div class="bg-surface-container-low rounded-xl p-4 mb-1 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-lowest px-4 py-2 rounded-lg text-xs font-bold text-primary uppercase tracking-wider border-b-2 border-primary">All Cases</button>
+<button class="px-4 py-2 rounded-lg text-xs font-bold text-on-surface-variant uppercase tracking-wider hover:bg-white/50 transition-colors">Flagged</button>
+<button class="px-4 py-2 rounded-lg text-xs font-bold text-on-surface-variant uppercase tracking-wider hover:bg-white/50 transition-colors">Under Review</button>
+<button class="px-4 py-2 rounded-lg text-xs font-bold text-on-surface-variant uppercase tracking-wider hover:bg-white/50 transition-colors">Closed</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-2 bg-surface-container-lowest rounded-lg text-xs font-semibold text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                </button>
+<button class="flex items-center gap-2 px-3 py-2 bg-surface-container-lowest rounded-lg text-xs font-semibold text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">sort</span> Sort: Newest
+                </button>
+</div>
+</div>
+<!-- Investigation Table -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_4px_20px_rgba(79,70,229,0.03)]">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">Case ID / Subject</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">Risk Level</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">Status</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">Assigned Analyst</th>
+<th class="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface-variant">Last Activity</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">CASE-8829-102</span>
+<span class="text-xs text-on-surface-variant tracking-tight">Global Vertex Holdings LLC</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error-container text-on-error-container">
+<span class="w-1 h-1 rounded-full bg-error mr-1.5"></span> Critical
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-semibold text-on-surface">Investigation In Progress</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img alt="Analyst Avatar" data-alt="headshot of a male analyst in professional attire, studio lighting, clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg_DbUdlioPfnaZJVmNnDNBEbIRQrM9Dw9YgpYhf3mWT4C42T_zKJHa2KsNFPLA-ZbZBco92p-9xijSEmIYlCF_ulbwQgy9vF4ohU_M_e1rTBj30v6U0j8Jbg-dW9NsQnkYkG5cg-0YDW8LqRRXk0IKnAZRDjdVJDdZkPWUvzXyv10GTUGIDNSrIvNJ42UKVZtBXnj_vg3wOR2DRaqzUtE-vhfIO3SWDjUME5DjT_xudR53fZLVsZRh2ieN2yU3Hd6nq8D52CkuWE"/>
+</div>
+<span class="text-xs font-medium">Marcus Chen</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">2 hours ago</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">CASE-7712-404</span>
+<span class="text-xs text-on-surface-variant tracking-tight">Elena Moretti</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container/10 text-secondary">
+<span class="w-1 h-1 rounded-full bg-secondary mr-1.5"></span> Medium
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-semibold text-on-surface">Pending SAR Filing</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img alt="Analyst Avatar" data-alt="headshot of a female analyst in business formal, professional lighting, corporate style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG_wy06r6l91isZTSAQBrcKjsTyfpJi42lU8Srt30BjpNdrgCBEZjh4i09UnRrnELHOjFWS2gGgeqsewXo79B2kMJXUbdPgPrAUjfFszQNHmaWLZ-NtlXexYtEPBm2dDS703eCQGzcpoL_DbSqeZvVxngrD75IAvspxP1F373pgb8cDLMRhlaibdpSzzOPgUSpMf-9kG_eEUjhvu8qmEmJxGbZJdJpqwt7S87nw6jXfgJ_UeOBavmmqB9uRY92gHDyDNO5pXRqlwk"/>
+</div>
+<span class="text-xs font-medium">Sarah Jenkins</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">5 hours ago</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group bg-surface-container-low/10">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">CASE-9021-332</span>
+<span class="text-xs text-on-surface-variant tracking-tight">Argo Maritime Logistics</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed-variant">
+<span class="w-1 h-1 rounded-full bg-tertiary mr-1.5"></span> Low
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-semibold text-on-surface">Initial Review</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center text-[10px] font-bold text-outline">
+                                    UA
+                                </div>
+<span class="text-xs font-medium italic text-on-surface-variant">Unassigned</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">Yesterday</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">CASE-4423-901</span>
+<span class="text-xs text-on-surface-variant tracking-tight">Techno-Core Systems Inc.</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error-container text-on-error-container">
+<span class="w-1 h-1 rounded-full bg-error mr-1.5"></span> Critical
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-semibold text-on-surface">Internal Audit</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img alt="Analyst Avatar" data-alt="professional male portrait for business directory, sharp focus, neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_-Sw3h3fOO9OHMPBfh-IcS5viVErmUVUb53mw8S_TyxqdnEAXBFtIKmP1LIEiJ6oIkiOJkcumbh6O_erwUq_1vP_WDqFqdaahG_017tlMeKKhxHXX3ebyWcKoQDdYZKeRcQXAtUxozGu3NBMeOR9rFbz2RcshWuXJmtQ8rptXZhc-rqXyLCX-jiZRTZX_9q8pa1_q4m8FZmpqAK9mwKbUHfgvUn__k-XG4zwNhwWIUKOwRZHXhVJ7BGRG9xlRB3DZo0M48IBVOw"/>
+</div>
+<span class="text-xs font-medium">David Miller</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">2 days ago</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">CASE-1209-661</span>
+<span class="text-xs text-on-surface-variant tracking-tight">Jameson Estate Fund</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container/10 text-secondary">
+<span class="w-1 h-1 rounded-full bg-secondary mr-1.5"></span> Medium
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-semibold text-on-surface">Information Requested</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img alt="Analyst Avatar" data-alt="headshot of a female executive in office setting, professional lighting, soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtKKjRudvbnLtGfiFaxlWZUug6qwNKi5SNalpqq956yZoSorJ1ToIMIJ4aE9_BoAV7a2vpMbWta87zrMqQ2bW3vFFTioYrsntBCRQzkuN5iWH7B0w1rkYIWO-f2BLzyUxhwi-7onmPYyOqSSP7jwGq0iDvOSJn9brvTC81tRr4qXku8BQjhHQ4vTHfvomdqGN_Jxmlr37UMoneMPanLrU6EjkdNhGwIt9zAiMcPY-1T11DeFHnPDwZkUX8zg5eJtzm5aYE748MbmU"/>
+</div>
+<span class="text-xs font-medium">Elena Rodriguez</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">3 days ago</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 flex items-center justify-between border-t border-surface-container bg-surface-container-low/20">
+<span class="text-xs text-on-surface-variant">Showing <span class="font-bold">1 - 5</span> of 142 cases</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded-md hover:bg-surface-container transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-md bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-md hover:bg-surface-container text-xs font-bold transition-colors">2</button>
+<button class="w-8 h-8 rounded-md hover:bg-surface-container text-xs font-bold transition-colors">3</button>
+<span class="px-2 text-xs font-bold text-on-surface-variant">...</span>
+<button class="w-8 h-8 rounded-md hover:bg-surface-container text-xs font-bold transition-colors">28</button>
+<button class="p-1 rounded-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Insights (Asymmetric Grid) -->
+<section class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Analyst Workload Distribution</h3>
+<div class="bg-surface-container-lowest p-6 rounded-xl">
+<div class="flex items-center justify-between mb-6">
+<span class="text-xs font-medium text-on-surface-variant">Capacity vs Assigned</span>
+<div class="flex gap-4">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span> <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Active</span></div>
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-surface-container"></span> <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Remaining</span></div>
+</div>
+</div>
+<div class="space-y-5">
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs"><span class="font-medium">Marcus Chen</span> <span class="text-on-surface-variant">12 / 15 cases</span></div>
+<div class="h-2 w-full bg-surface-container rounded-full"><div class="h-full bg-primary w-4/5 rounded-full"></div></div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs"><span class="font-medium">Sarah Jenkins</span> <span class="text-on-surface-variant">8 / 15 cases</span></div>
+<div class="h-2 w-full bg-surface-container rounded-full"><div class="h-full bg-primary w-3/5 rounded-full"></div></div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs"><span class="font-medium">David Miller</span> <span class="text-on-surface-variant">14 / 15 cases</span></div>
+<div class="h-2 w-full bg-surface-container rounded-full"><div class="h-full bg-error w-11/12 rounded-full"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Urgent Network Alerts</h3>
+<div class="bg-surface-container-lowest p-5 rounded-xl space-y-4">
+<div class="flex gap-4 items-start p-3 hover:bg-surface-container-low transition-colors rounded-lg cursor-pointer">
+<div class="p-2 bg-error-container text-error rounded-lg">
+<span class="material-symbols-outlined text-sm">hub</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">New High-Risk Nexus</p>
+<p class="text-[10px] text-on-surface-variant mt-0.5">3 connected shell entities identified in Baltic region.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start p-3 hover:bg-surface-container-low transition-colors rounded-lg cursor-pointer">
+<div class="p-2 bg-tertiary-fixed text-tertiary rounded-lg">
+<span class="material-symbols-outlined text-sm">history</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">Sanction List Update</p>
+<p class="text-[10px] text-on-surface-variant mt-0.5">Automated screening suggests 4 current cases hit OFAC refresh.</p>
+</div>
+</div>
+<button class="w-full py-2.5 mt-2 text-xs font-bold text-primary uppercase tracking-widest hover:bg-primary/5 rounded-lg transition-colors">View All Insights</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-slate-50/95 backdrop-blur-md flex justify-around items-center py-3 px-2 z-40 border-t border-slate-200">
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[9px] uppercase font-bold tracking-tight">Overview</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="text-[9px] uppercase font-bold tracking-tight">Alerts</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-indigo-700" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="text-[9px] uppercase font-bold tracking-tight">Cases</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[9px] uppercase font-bold tracking-tight">Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sentinel AML | Live Monitoring</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#23005c",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-surface-variant": "#464555",
+                        "outline-variant": "#c7c4d8",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#6b38d4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#93e8ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#dad7ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#006a7c",
+                        "tertiary-fixed": "#acedff",
+                        "surface-dim": "#d8dadc",
+                        "surface-tint": "#4d44e3",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#8455ef",
+                        "inverse-surface": "#2d3133",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#e9ddff",
+                        "on-background": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#fffbff",
+                        "outline": "#777587",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#3525cd",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-container": "#4f46e5",
+                        "surface-container-low": "#f2f4f6",
+                        "background": "#f7f9fb",
+                        "tertiary": "#00505f",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-fixed": "#e2dfff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-40 bg-slate-50/80 backdrop-blur-xl flex justify-between items-center h-16 px-6 w-full">
+<div class="flex items-center gap-8">
+<span class="text-lg font-bold tracking-tighter text-indigo-700">Sentinel AML</span>
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-100 border-none rounded-lg py-2 pl-10 pr-4 text-sm w-80 focus:ring-2 focus:ring-indigo-500/20" placeholder="Search transactions, entities..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-200/50 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden ml-2 bg-indigo-100 flex items-center justify-center">
+<img alt="User Profile" class="object-cover h-full w-full" data-alt="professional male portrait with neutral background and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSBmvedwgshpaEihljqh3yAc6zO9-dm-cZdKhqzGPl5SvPIeReybNobR1NyZ0_nfbS0eg0zrtIWakuc5Z46tGeVXgW5IA6BzuzndAX_iQcGQI7q0w4Zm35acPpok3SAGfPFLSBDiUOXb972fYa5jT08smS2IsBjAxYAHpWPzsz9zRiX4EF8DxL-MMoOLtr88HK8yfFLsHrHa_y8J4EmnYuA_jY7QmiLrlNPkY57PHGduWtCGwcX8aRXKacxKsso8HLNRjO62CkfGw"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-slate-50 flex flex-col py-6 px-4 gap-2 border-r border-slate-200/50">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<div class="text-sm font-bold tracking-tight text-on-surface">Sentinel AML</div>
+<div class="text-[10px] font-medium uppercase tracking-widest text-slate-400">The Ethereal Ledger</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-indigo-700 font-bold border-r-2 border-indigo-600 bg-indigo-50/50 rounded-l-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="monitor_heart" style="font-variation-settings: 'FILL' 1;">monitor_heart</span>
+<span>Live Monitoring</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span>Network Analysis</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>Behavioral Analysis</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span>Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span>Case Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-1 border-t border-slate-200/50 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-indigo-500 hover:bg-indigo-50/50 rounded-lg transition-all duration-200 ease-in-out font-sans text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-16 min-h-screen bg-surface">
+<div class="p-8">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight text-on-surface mb-1">Live Monitoring</h1>
+<p class="text-on-surface-variant text-sm flex items-center gap-2">
+<span class="w-2 h-2 bg-tertiary rounded-full"></span>
+                        Real-time transaction analysis pipeline active
+                    </p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container-highest text-primary font-semibold rounded-lg text-sm transition-all">
+                        Historical Export
+                    </button>
+<button class="px-4 py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold rounded-lg text-sm shadow-lg shadow-primary/10">
+                        Global Risk Config
+                    </button>
+</div>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- Left: Live Transactions (Bento Main) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- Metrics Row -->
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl border-none">
+<div class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-2">Throughput</div>
+<div class="text-2xl font-extrabold tracking-tight">4,281 <span class="text-xs text-on-surface-variant font-medium">tx/min</span></div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border-none">
+<div class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-2">Flagged Ratio</div>
+<div class="text-2xl font-extrabold tracking-tight text-error">1.42%</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl border-none">
+<div class="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mb-2">Anomalies Detected</div>
+<div class="text-2xl font-extrabold tracking-tight text-secondary">64 <span class="text-xs text-on-surface-variant font-medium">past hr</span></div>
+</div>
+</div>
+<!-- Live Feed -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden min-h-[600px] flex flex-col">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-white/50 backdrop-blur-md sticky top-0 z-10">
+<h2 class="text-sm font-bold tracking-tight text-on-surface">Active Transaction Stream</h2>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-surface-container text-[10px] font-bold rounded uppercase tracking-wider text-on-surface-variant">Filter: High Risk</span>
+<span class="px-2 py-1 bg-surface-container text-[10px] font-bold rounded uppercase tracking-wider text-on-surface-variant">Live</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto scrollbar-hide">
+<!-- Table Header -->
+<div class="grid grid-cols-12 px-6 py-3 bg-surface-container-low text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+<div class="col-span-1">Risk</div>
+<div class="col-span-4">Entity / Transaction ID</div>
+<div class="col-span-2">Amount</div>
+<div class="col-span-2">Origin</div>
+<div class="col-span-3 text-right">Time</div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-12 px-6 py-5 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors cursor-pointer group">
+<div class="col-span-1">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-bold text-xs">89</div>
+</div>
+<div class="col-span-4">
+<div class="text-sm font-semibold text-on-surface">GlobalTrade Logistics Inc.</div>
+<div class="text-[11px] text-on-surface-variant font-mono">TX-9021-X992</div>
+</div>
+<div class="col-span-2">
+<div class="text-sm font-bold tracking-tight text-on-surface">$14,500.00</div>
+<div class="text-[11px] text-tertiary font-medium">USD</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-on-surface-variant">public</span>
+<span class="text-xs font-medium">Panama (KYC-B)</span>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-xs text-on-surface-variant">Just now</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 px-6 py-5 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors cursor-pointer group">
+<div class="col-span-1">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-bold text-xs">12</div>
+</div>
+<div class="col-span-4">
+<div class="text-sm font-semibold text-on-surface">Elena Rodriguez</div>
+<div class="text-[11px] text-on-surface-variant font-mono">TX-1182-A004</div>
+</div>
+<div class="col-span-2">
+<div class="text-sm font-bold tracking-tight text-on-surface">€842.10</div>
+<div class="text-[11px] text-on-surface-variant">EUR</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-on-surface-variant">public</span>
+<span class="text-xs font-medium">Spain</span>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-xs text-on-surface-variant">12s ago</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 px-6 py-5 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors cursor-pointer group bg-error-container/10">
+<div class="col-span-1">
+<div class="w-8 h-8 rounded-full bg-error text-white flex items-center justify-center font-bold text-xs">96</div>
+</div>
+<div class="col-span-4">
+<div class="text-sm font-semibold text-on-surface">CryptoPulse Exchange</div>
+<div class="text-[11px] text-on-surface-variant font-mono">TX-7712-C841</div>
+</div>
+<div class="col-span-2">
+<div class="text-sm font-bold tracking-tight text-on-surface">$52,000.00</div>
+<div class="text-[11px] text-tertiary font-medium">BTC Equiv.</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-xs">warning</span>
+<span class="text-xs font-bold">Unmapped Wallet</span>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-xs font-bold text-error">CRITICAL • 45s ago</div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 px-6 py-5 border-b border-slate-50 items-center hover:bg-slate-50/50 transition-colors cursor-pointer group">
+<div class="col-span-1">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-xs">41</div>
+</div>
+<div class="col-span-4">
+<div class="text-sm font-semibold text-on-surface">Markham &amp; Sons</div>
+<div class="text-[11px] text-on-surface-variant font-mono">TX-8821-M110</div>
+</div>
+<div class="col-span-2">
+<div class="text-sm font-bold tracking-tight text-on-surface">$2,410.00</div>
+<div class="text-[11px] text-on-surface-variant">USD</div>
+</div>
+<div class="col-span-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-on-surface-variant">public</span>
+<span class="text-xs font-medium">United States</span>
+</div>
+</div>
+<div class="col-span-3 text-right">
+<div class="text-xs text-on-surface-variant">1m ago</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Anomaly Engine Analysis (Panel) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6 sticky top-24">
+<!-- Engine Status Card -->
+<div class="bg-gradient-to-br from-indigo-900 to-indigo-950 p-6 rounded-xl text-white shadow-xl shadow-indigo-200">
+<div class="flex items-center justify-between mb-4">
+<div class="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-300">Anomaly Engine v4.2</div>
+<span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[9px] font-black rounded uppercase">Active</span>
+</div>
+<div class="text-xs text-indigo-100 leading-relaxed mb-4">
+                            Synthesizing behavioral patterns across 142 distinct vectors. Current confidence floor: <span class="text-indigo-300 font-bold">92.4%</span>
+</div>
+<div class="h-1 bg-indigo-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary-fixed-dim w-[92%]"></div>
+</div>
+</div>
+<!-- Flag Explanation List -->
+<div class="bg-surface-container-low p-1 rounded-xl">
+<div class="bg-surface-container-lowest p-5 rounded-lg">
+<h3 class="text-sm font-bold tracking-tight text-on-surface mb-4">Current Flag Analysis</h3>
+<div class="space-y-6">
+<!-- Analysis Item 1 -->
+<div class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<span class="text-xs font-bold text-on-surface">Rapid Structuring</span>
+</div>
+<span class="text-[10px] font-bold text-error bg-error-container px-1.5 py-0.5 rounded">98% Conf.</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-normal mb-3">
+                                        Detecting 14 sub-$3k transactions within a 4-hour window from origin account 0x82...A1. Pattern consistent with anti-threshold evasion.
+                                    </p>
+<div class="flex gap-2">
+<button class="text-[10px] font-bold text-primary hover:underline">Investigate Case</button>
+<button class="text-[10px] font-bold text-on-surface-variant hover:text-on-surface">Dismiss Noise</button>
+</div>
+</div>
+<!-- Analysis Item 2 -->
+<div class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">language</span>
+</div>
+<span class="text-xs font-bold text-on-surface">Geographic Velocity</span>
+</div>
+<span class="text-[10px] font-bold text-secondary bg-secondary-fixed px-1.5 py-0.5 rounded">84% Conf.</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-normal mb-3">
+                                        Concurrent login and transaction attempts from Lagos (NG) and Reykjavik (IS). Distance/Time ratio exceeds physical travel limits.
+                                    </p>
+<div class="flex gap-2">
+<button class="text-[10px] font-bold text-primary hover:underline">Verify Identity</button>
+<button class="text-[10px] font-bold text-on-surface-variant hover:text-on-surface">Flag Account</button>
+</div>
+</div>
+<!-- Analysis Item 3 -->
+<div class="group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">history</span>
+</div>
+<span class="text-xs font-bold text-on-surface">Dormant Re-activation</span>
+</div>
+<span class="text-[10px] font-bold text-tertiary bg-tertiary-fixed px-1.5 py-0.5 rounded">71% Conf.</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-normal mb-3">
+                                        Account inactive for 730+ days suddenly initiating high-volume wires to known shell entity proxies.
+                                    </p>
+<div class="flex gap-2">
+<button class="text-[10px] font-bold text-primary hover:underline">Review Profile</button>
+<button class="text-[10px] font-bold text-on-surface-variant hover:text-on-surface">Snooze</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Risk Map Mini -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden h-40 relative">
+<div class="absolute inset-0 opacity-40 grayscale group-hover:grayscale-0 transition-all">
+<img alt="World Map" class="object-cover w-full h-full" data-alt="minimalist dark gray world map with highlighted nodes and data connection lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs7Ih_aVy1PWaxqISiyChlAHw9HIpHNEthmPxVdGDhrlF4Ww3KuST6fTMOfWp5268op34LzeojcEArKxg2puu0_Mx4ATe8M9rwKbutr8iVMgNcFyKuIux3-ogrynrJaIfGcmKVxHPqVmqRiHnXroYH2MC6gW2tCzt3Semw0_-c_mT1Qanpf_C0rTFSOG1nCBo4D3d_Hl_TdT8RNJbS15sK1o2F9cC7vJ8pKUnVMThcoAia9R7nfAwpDElggdu7sJO3jqh6os1ITF8"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3">
+<div class="text-[10px] font-bold uppercase tracking-widest text-on-surface">Hotspot View</div>
+<div class="text-[9px] text-on-surface-variant">Central Asia: High Influx</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action for Quick Alert -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-error text-white rounded-full flex items-center justify-center shadow-2xl shadow-error/40 hover:scale-105 transition-transform z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emergency</span>
+</button>
+</body></html>

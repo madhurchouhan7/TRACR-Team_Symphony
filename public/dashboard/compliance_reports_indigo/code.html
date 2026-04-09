@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Compliance Reports | Sentinel AML</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#4cd7f6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#23005c",
+                        "on-tertiary-fixed": "#001f26",
+                        "on-surface-variant": "#464555",
+                        "outline-variant": "#c7c4d8",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#6b38d4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#93e8ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#dad7ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#006a7c",
+                        "tertiary-fixed": "#acedff",
+                        "surface-dim": "#d8dadc",
+                        "surface-tint": "#4d44e3",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#8455ef",
+                        "inverse-surface": "#2d3133",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#e9ddff",
+                        "on-background": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-fixed-variant": "#004e5c",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#fffbff",
+                        "outline": "#777587",
+                        "surface-bright": "#f7f9fb",
+                        "primary": "#3525cd",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-container": "#4f46e5",
+                        "surface-container-low": "#f2f4f6",
+                        "background": "#f7f9fb",
+                        "tertiary": "#00505f",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-fixed": "#e2dfff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-slate-50 dark:bg-slate-950 flex flex-col py-6 px-4 gap-2">
+<div class="flex items-center gap-3 px-2 mb-8">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h1 class="text-indigo-700 dark:text-indigo-300 font-extrabold tracking-tighter text-lg leading-none">Sentinel AML</h1>
+<p class="text-[10px] font-medium uppercase tracking-widest text-slate-500">The Ethereal Ledger</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span>Live Monitoring</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">hub</span>
+<span>Network Analysis</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">psychology</span>
+<span>Behavioral Analysis</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">notifications_active</span>
+<span>Alerts</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">work</span>
+<span>Case Management</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-indigo-700 dark:text-indigo-300 font-bold border-r-2 border-indigo-600 dark:border-indigo-400 bg-indigo-50/30 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">assessment</span>
+<span>Reports</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-all duration-200 ease-in-out text-slate-500 dark:text-slate-400 hover:text-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</div>
+</nav>
+<div class="border-t border-slate-200 dark:border-slate-800 pt-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer text-slate-500 hover:text-indigo-500 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">help</span>
+<span>Help Center</span>
+</div>
+<div class="flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer text-slate-500 hover:text-indigo-500 font-sans text-xs font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</div>
+</div>
+</aside>
+<header class="fixed top-0 left-64 right-0 z-40 bg-slate-50/80 backdrop-blur-xl h-16 flex items-center justify-between px-8 border-b-0">
+<div class="flex items-center gap-4 bg-slate-100 dark:bg-slate-900 px-4 py-1.5 rounded-lg w-96">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-400" placeholder="Search reports, entities, or filing IDs..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-primary transition-colors">schedule</span>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-primary transition-colors">notifications</span>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-slate-200">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface leading-tight">Julius Sterling</p>
+<p class="text-[10px] text-on-surface-variant font-medium uppercase tracking-wider">Compliance Officer</p>
+</div>
+<img alt="User Profile" class="w-10 h-10 rounded-lg object-cover" data-alt="professional portrait of a middle aged man with glasses and a focused expression in a clean studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs93lmbK2E9tumqtNHB0jR8qEKi1FqisrlSqzfAn09bx8KWdSFZQm1jJmKYNo1inemDk47bUHIjUqcbrsR6QH8IP_4HQGMMfpOXcJCGtZraaNIEGvSQ9mVf9nfUbFiVi-8aceYI3QFuryx-jNNX344Gkhw5_lc2jRDsMuvwqTY31Gr6rZpXKGTZt5AHDcalE2W35WZvF0MAntK8CT554lTXu-ck-IY8gOpmECZXQacgBSZx9136aUgKtdDyRlRc5f_VhauZIbKW2g"/>
+</div>
+</div>
+</header>
+<main class="ml-64 pt-24 px-8 pb-12">
+<div class="flex items-end justify-between mb-10">
+<div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-1">Compliance Reports</h2>
+<p class="text-on-surface-variant font-medium">Monitoring filing cycles and regulatory submission health.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 bg-surface-container-highest text-primary font-semibold text-sm rounded-lg flex items-center gap-2 hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Export PDF
+                </button>
+<button class="px-5 py-2.5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold text-sm rounded-lg flex items-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                    New Filing
+                </button>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl border-0">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+<span class="material-symbols-outlined">file_open</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest px-2 py-1 bg-surface-container-low rounded">Active</span>
+</div>
+<p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider mb-1">Pending Reports</p>
+<p class="text-2xl font-extrabold tracking-tight">42</p>
+<div class="mt-4 flex items-center gap-1.5 text-xs text-tertiary font-medium">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+<span>-12% from last month</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-0">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined">task_alt</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest px-2 py-1 bg-surface-container-low rounded">Completed</span>
+</div>
+<p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider mb-1">Submitted (MTD)</p>
+<p class="text-2xl font-extrabold tracking-tight">128</p>
+<div class="mt-4 flex items-center gap-1.5 text-xs text-secondary font-medium">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+5% from last month</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-0">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-[10px] font-bold text-error uppercase tracking-widest px-2 py-1 bg-error-container rounded">Critical</span>
+</div>
+<p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider mb-1">High Risk Cases</p>
+<p class="text-2xl font-extrabold tracking-tight">07</p>
+<div class="mt-4 flex items-center gap-1.5 text-xs text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>3 Due in 24 hours</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-0">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-slate-50 text-slate-600 rounded-lg">
+<span class="material-symbols-outlined">history</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest px-2 py-1 bg-surface-container-low rounded">Health</span>
+</div>
+<p class="text-on-surface-variant text-[11px] font-bold uppercase tracking-wider mb-1">Audit Score</p>
+<p class="text-2xl font-extrabold tracking-tight">98.4%</p>
+<div class="mt-4 flex items-center gap-1.5 text-xs text-tertiary font-medium">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Above industry avg</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-8 mb-12">
+<div class="col-span-2 bg-surface-container-lowest p-8 rounded-xl">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-sm font-bold tracking-tight text-on-surface uppercase">Monthly Filing Distribution</h3>
+<select class="bg-surface-container-low border-none text-[11px] font-bold uppercase tracking-widest py-1.5 pl-3 pr-8 rounded-lg text-on-surface-variant ring-0 focus:ring-primary/20">
+<option>Last 6 Months</option>
+<option>Last Year</option>
+</select>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-2">
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[40%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[25%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">JAN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[60%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[45%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">FEB</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[50%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[30%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[80%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[55%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">APR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[70%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[50%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">MAY</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-slate-100 rounded-lg relative overflow-hidden group h-full">
+<div class="absolute bottom-0 w-full bg-indigo-200 h-[90%] group-hover:bg-indigo-300 transition-colors"></div>
+<div class="absolute bottom-0 w-full bg-primary h-[75%]"></div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant">JUN</span>
+</div>
+</div>
+<div class="mt-8 flex gap-6 justify-center">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-[11px] font-medium text-on-surface-variant">SAR Filings</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-indigo-200"></div>
+<span class="text-[11px] font-medium text-on-surface-variant">CTR Filings</span>
+</div>
+</div>
+</div>
+<div class="col-span-1 bg-surface-container-low p-8 rounded-xl">
+<h3 class="text-sm font-bold tracking-tight text-on-surface uppercase mb-6">Status Breakdown</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-xs font-semibold">Under Investigation</span>
+<span class="text-xs font-bold">34%</span>
+</div>
+<div class="w-full bg-white h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[34%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-xs font-semibold">Regulatory Review</span>
+<span class="text-xs font-bold">18%</span>
+</div>
+<div class="w-full bg-white h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[18%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-xs font-semibold">Flagged for Correction</span>
+<span class="text-xs font-bold">8%</span>
+</div>
+<div class="w-full bg-white h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full w-[8%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-xs font-semibold">Archived / Closed</span>
+<span class="text-xs font-bold">40%</span>
+</div>
+<div class="w-full bg-white h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[40%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-10 p-5 bg-white/50 backdrop-blur rounded-lg border-0">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-3">Recent Alert</p>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-error">notification_important</span>
+<p class="text-xs font-medium leading-relaxed">3 reports are approaching FinCEN deadline in less than 12 hours.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_12px_32px_rgba(79,70,229,0.06)]">
+<div class="p-8 flex justify-between items-center border-b border-surface-container">
+<h3 class="text-sm font-bold tracking-tight text-on-surface uppercase">Audit Trail &amp; Filing Log</h3>
+<div class="flex gap-4">
+<button class="text-xs font-bold text-on-surface-variant flex items-center gap-1.5 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filter
+                    </button>
+<button class="text-xs font-bold text-on-surface-variant flex items-center gap-1.5 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">sort</span>
+                        Sort
+                    </button>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Report ID</th>
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Entity</th>
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Type</th>
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Date Submitted</th>
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Risk Level</th>
+<th class="py-4 px-8 text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/50 transition-colors cursor-pointer group">
+<td class="py-5 px-8 text-sm font-bold text-primary">#SAR-2024-0089</td>
+<td class="py-5 px-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">GA</div>
+<span class="text-sm font-semibold">Global Apex Corp</span>
+</div>
+</td>
+<td class="py-5 px-8 text-xs font-medium">SAR Filing</td>
+<td class="py-5 px-8 text-xs text-on-surface-variant">Oct 12, 2023 · 14:22</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded-full uppercase">High</span>
+</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] font-bold rounded-full uppercase">Accepted</span>
+</td>
+</tr>
+<tr class="bg-surface-container-low/20 hover:bg-surface-container-low/50 transition-colors cursor-pointer group">
+<td class="py-5 px-8 text-sm font-bold text-primary">#CTR-2024-0042</td>
+<td class="py-5 px-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-700">LD</div>
+<span class="text-sm font-semibold">Lumina Digital</span>
+</div>
+</td>
+<td class="py-5 px-8 text-xs font-medium">CTR Filing</td>
+<td class="py-5 px-8 text-xs text-on-surface-variant">Oct 11, 2023 · 09:15</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-surface-container-low text-on-surface-variant text-[10px] font-bold rounded-full uppercase">Medium</span>
+</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] font-bold rounded-full uppercase">Accepted</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors cursor-pointer group">
+<td class="py-5 px-8 text-sm font-bold text-primary">#SAR-2024-0091</td>
+<td class="py-5 px-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">VN</div>
+<span class="text-sm font-semibold">Vortex Networks</span>
+</div>
+</td>
+<td class="py-5 px-8 text-xs font-medium">SAR Filing</td>
+<td class="py-5 px-8 text-xs text-on-surface-variant">Oct 10, 2023 · 16:45</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded-full uppercase">Critical</span>
+</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-[10px] font-bold rounded-full uppercase">In Review</span>
+</td>
+</tr>
+<tr class="bg-surface-container-low/20 hover:bg-surface-container-low/50 transition-colors cursor-pointer group">
+<td class="py-5 px-8 text-sm font-bold text-primary">#CTR-2024-0045</td>
+<td class="py-5 px-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-700">SP</div>
+<span class="text-sm font-semibold">Swift Pay LTD</span>
+</div>
+</td>
+<td class="py-5 px-8 text-xs font-medium">CTR Filing</td>
+<td class="py-5 px-8 text-xs text-on-surface-variant">Oct 10, 2023 · 11:30</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-surface-container-low text-on-surface-variant text-[10px] font-bold rounded-full uppercase">Low</span>
+</td>
+<td class="py-5 px-8">
+<span class="px-2.5 py-1 bg-indigo-50 text-indigo-400 text-[10px] font-bold rounded-full uppercase">Flagged</span>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-6 bg-surface-container-lowest flex items-center justify-between">
+<p class="text-xs text-on-surface-variant font-medium">Showing <span class="font-bold text-on-surface">4</span> of <span class="font-bold text-on-surface">128</span> entries</p>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-low text-on-surface-variant rounded-lg hover:bg-primary/10 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="px-3.5 py-2 bg-primary text-on-primary text-xs font-bold rounded-lg">1</button>
+<button class="px-3.5 py-2 bg-surface-container-low text-on-surface-variant text-xs font-bold rounded-lg hover:bg-primary/10 hover:text-primary transition-colors">2</button>
+<button class="px-3.5 py-2 bg-surface-container-low text-on-surface-variant text-xs font-bold rounded-lg hover:bg-primary/10 hover:text-primary transition-colors">3</button>
+<button class="p-2 bg-surface-container-low text-on-surface-variant rounded-lg hover:bg-primary/10 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
