@@ -1,0 +1,52 @@
+module.exports = {
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "transaction_id",
+    "sender_account_id",
+    "receiver_account_id",
+    "amount",
+    "timestamp",
+    "transaction_type",
+    "geolocation",
+    "channel",
+    "device_id",
+  ],
+  properties: {
+    transaction_id: { type: "string", format: "uuid" },
+    sender_account_id: { type: "string", minLength: 1 },
+    receiver_account_id: { type: "string", minLength: 1 },
+    amount: { type: "number", exclusiveMinimum: 0 },
+    currency: {
+      type: "string",
+      minLength: 3,
+      maxLength: 3,
+      default: "USD",
+    },
+    timestamp: { type: "string", format: "date-time" },
+    transaction_type: { enum: ["WIRE", "ACH", "CASH", "CRYPTO"] },
+    geolocation: {
+      type: "object",
+      additionalProperties: false,
+      required: ["sender_country", "receiver_country"],
+      properties: {
+        sender_country: {
+          type: "string",
+          minLength: 2,
+          maxLength: 2,
+          pattern: "^[A-Z]{2}$",
+        },
+        receiver_country: {
+          type: "string",
+          minLength: 2,
+          maxLength: 2,
+          pattern: "^[A-Z]{2}$",
+        },
+      },
+    },
+    channel: { enum: ["MOBILE", "BRANCH", "ATM", "ONLINE"] },
+    device_id: { type: "string", minLength: 1 },
+    is_synthetic: { type: "boolean" },
+    pattern_tag: { enum: ["SMURFING", "CIRCULAR_TRADING", null] },
+  },
+};
