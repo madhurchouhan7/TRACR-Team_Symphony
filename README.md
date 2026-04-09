@@ -1,1 +1,100 @@
-# TRACR-Team_Symphony
+# TRACR: Intelligent AML Framework
+
+![TRACR Dashboard Background](https://lh3.googleusercontent.com/aida-public/AB6AXuASRvJfKXx54L6J6UnQj1GeZBbPOdVu24iUkL9LVf9mhOolUpXR1foBzRiFvAq0WgoeRYtrs3Jgb3FENoj1KRYKjG_mBAeGz6H3OZm9BfcipO9Wq_kiTPLGHbibqB5Mxk8d0CXb3JShHTA5WtrYBZA0WeQyOmikZQPSXAZXT3OIdCM7fv_vy2bf-uR2jWO3_QoMJomU9d8E38QE867jerPZ9GJQa6rjDQtNmTrEUyPFtFvb3B04HVCSYnoL7Kwf9N1mC8DEH3gN-H5O)
+
+## Overview
+TRACR is an advanced, high-performance **Anti-Money Laundering (AML) platform** designed to reduce investigator fatigue through high-density UI abstractions, explainable AI (XAI), and real-time graph topology visualization.
+
+Nicknamed the "Sovereign Observer", TRACR utilizes a robust micro-service architecture to process high-volume transaction telemetry, detect complex laundering typologies (like Smurfing, Value Layering, and Circular Trading), and automatically draft Suspicious Activity Reports (SARs) using Google's Gemini LLM.
+
+## System Architecture
+
+The project consists of three primary layers:
+1. **Frontend (The Intelligence Layer)**: React + Vite + Tailwind CSS v4. Native Dark-Mode-First UI communicating via WebSockets for real-time anomaly feeds.
+2. **Backend**: Express.js (Node.js) REST API with an embedded `SocketGateway` for real-time event pushing.
+3. **Detection Engine / AI**: A Python-based ML heuristic synthetic stream generator (`seed_data.py`) modeling real-world transactional behaviors into MongoDB.
+
+## Features
+- **Real-Time Anomaly Feed**: Live inference and alerting using WebSocket `metrics:update` packets.
+- **Topological Discovery**: Visual alerts showing network-level threats directly in the dashboard.
+- **Automated SAR Generation**: Integrated with generative AI to write investigation reports off flagged cases instantly.
+- **Premium Fintech Aesthetic**: Glassmorphism, tailored Tonal Layering, and high-density layouts optimized for threat hunting.
+
+---
+
+## Getting Started
+
+### 1. Prerequisites
+- Node.js (v20+)
+- Python (v3.10+)
+- A **MongoDB** instance (Localport `27017` or Atlas Cloud URL)
+
+### 2. Configuration & Secrets Setup
+Before starting, create an environment variable file in the backend folder:
+```bash
+cp backend/.env.example backend/.env
+```
+Open `backend/.env` and securely configure your credentials:
+```env
+# MongoDB Atlas Connection String
+MONGO_URI=mongodb+srv://tracr_user:tracrdbpassword@<YOUR_CLUSTER_ID>.mongodb.net/intelligent_aml
+
+# Authentication
+JWT_SECRET=replace_with_strong_secret
+
+# AI Layer
+GEMINI_API_KEY=replace_with_gemini_key
+```
+
+### 3. Installation
+
+**Install Backend Dependencies:**
+```bash
+cd backend
+npm install
+```
+
+**Install Frontend Dependencies:**
+```bash
+cd frontend
+npm install
+```
+
+---
+
+## Running TRACR Locally
+
+Running the completely interconnected ecosystem requires spinning up the three layers concurrently.
+
+### Step 1: Start the Backend Gateway
+Opens port `3000` to serve the API routes and instantiate the WebSocket instance.
+```bash
+cd backend
+node src/server.js
+```
+
+### Step 2: Start the Frontend UI
+Starts the Vite dev server with automated proxying to the backend. Eliminates CORS requirements.
+```bash
+cd frontend
+npm run dev
+```
+Navigate to `http://localhost:5173`. 
+
+### Step 3: Trigger Live Synthetic Threats (Optional)
+To watch the UI dashboard detect anomalies and render KPIs live, execute the python ML generator pipeline to stream mock transaction typologies:
+```bash
+cd backend
+# Make sure python environment is ready
+python seed_data.py
+```
+
+---
+
+## Tech Stack
+* **Vite** & **React** 
+* **Tailwind CSS v4** (PostCSS integration)
+* **Socket.io** (Real-time Eventing)
+* **MongoDB** (Storage layer)
+* **Express.js** 
+* **Gemini LLM** (Auto-SAR Gen)
