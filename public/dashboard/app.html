@@ -112,7 +112,7 @@
 <!-- ═══════════════════════════════════════════════════════════ SIDEBAR ══ -->
 <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 z-50 bg-slate-50 flex flex-col py-6 px-4 gap-2">
   <div class="px-2 mb-8">
-    <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer" style="text-decoration: none; display: flex;">
       <div class="w-8 h-8 rounded-lg bg-micro-gradient flex items-center justify-center text-on-primary">
         <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">security</span>
       </div>
@@ -120,7 +120,7 @@
         <h1 class="font-headline font-bold text-on-surface tracking-tighter text-lg leading-tight">Sentinel AML</h1>
         <p class="text-[10px] text-on-surface-variant font-label tracking-widest uppercase">The Ethereal Ledger</p>
       </div>
-    </div>
+    </a>
   </div>
 
   <nav id="sidebar-nav" class="flex-1 space-y-1">
@@ -151,9 +151,9 @@
     <a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:text-indigo-500 transition-all duration-200 font-sans text-xs uppercase tracking-wider cursor-pointer">
       <span class="material-symbols-outlined text-lg">help</span>Help Center
     </a>
-    <a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:text-error transition-all duration-200 font-sans text-xs uppercase tracking-wider cursor-pointer">
-      <span class="material-symbols-outlined text-lg">logout</span>Log Out
-    </a>
+    <a href="/" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:text-error transition-all duration-200 font-sans text-xs uppercase tracking-wider cursor-pointer">
+        <span class="material-symbols-outlined text-lg">logout</span>Log Out
+      </a>
   </div>
 </aside>
 
@@ -185,7 +185,7 @@
 </header>
 
 <!-- ═══════════════════════════════════════════════════════ MAIN CANVAS ══ -->
-<main class="ml-64 min-h-screen">
+<main class="ml-64 pt-16 min-h-screen">
   <div id="content-area" class="page-enter"></div>
 </main>
 
@@ -193,7 +193,7 @@
 
 <!-- ─── OVERVIEW ─────────────────────────────────────────────────────── -->
 <template id="page-overview">
-<div class="pt-24 px-8 pb-12 max-w-[1600px] mx-auto">
+<div class="pt-8 px-8 pb-12 max-w-[1600px] mx-auto">
   <div class="flex items-end justify-between mb-8">
     <div>
       <h2 class="text-3xl font-headline font-extrabold text-on-surface tracking-tight">Overview Dashboard</h2>
@@ -215,7 +215,7 @@
       <div class="absolute top-0 right-0 p-4 opacity-10"><span class="material-symbols-outlined text-4xl text-primary">account_balance_wallet</span></div>
       <p class="text-[10px] font-label font-bold uppercase tracking-widest text-on-surface-variant mb-1">Total Transactions</p>
       <div class="flex items-baseline gap-2">
-        <h3 class="text-2xl font-headline font-bold text-on-surface">$12.4M</h3>
+        <h3 class="text-2xl font-headline font-bold text-on-surface">₹12.4M</h3>
         <span class="text-[10px] font-bold text-tertiary-container bg-tertiary-fixed px-1.5 py-0.5 rounded-full">+12.4%</span>
       </div>
       <div class="mt-4 h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
@@ -483,7 +483,7 @@
                 </div>
                 <span class="text-[10px] font-bold text-error bg-error-container px-1.5 py-0.5 rounded">98% Conf.</span>
               </div>
-              <p class="text-[11px] text-on-surface-variant leading-normal mb-3">Detecting 14 sub-$3k transactions within a 4-hour window. Pattern consistent with anti-threshold evasion.</p>
+              <p class="text-[11px] text-on-surface-variant leading-normal mb-3">Detecting 14 sub-₹3k transactions within a 4-hour window. Pattern consistent with anti-threshold evasion.</p>
               <div class="flex gap-2">
                 <button onclick="navigate('cases')" class="text-[10px] font-bold text-primary hover:underline">Investigate Case</button>
                 <button class="text-[10px] font-bold text-on-surface-variant hover:text-on-surface">Dismiss Noise</button>
@@ -609,8 +609,8 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-8">
-        <div class="bg-surface p-4 rounded-lg"><p class="text-[10px] text-slate-400 uppercase font-medium mb-1">Inbound Vol</p><p class="text-md font-bold text-indigo-700">$1.2M</p></div>
-        <div class="bg-surface p-4 rounded-lg"><p class="text-[10px] text-slate-400 uppercase font-medium mb-1">Outbound Vol</p><p class="text-md font-bold text-indigo-700">$840K</p></div>
+        <div class="bg-surface p-4 rounded-lg"><p class="text-[10px] text-slate-400 uppercase font-medium mb-1">Inbound Vol</p><p class="text-md font-bold text-indigo-700">₹1.2M</p></div>
+        <div class="bg-surface p-4 rounded-lg"><p class="text-[10px] text-slate-400 uppercase font-medium mb-1">Outbound Vol</p><p class="text-md font-bold text-indigo-700">₹840K</p></div>
         <div class="bg-surface p-4 rounded-lg col-span-2">
           <p class="text-[10px] text-slate-400 uppercase font-medium mb-1">Layering Probability</p>
           <div class="w-full h-1.5 bg-slate-200 rounded-full mt-2 overflow-hidden"><div class="h-full bg-error w-3/4"></div></div>
@@ -623,7 +623,7 @@
           <div class="flex gap-3 cursor-pointer group">
             <div class="flex flex-col items-center"><div class="w-2 h-2 rounded-full bg-error"></div><div class="w-px flex-1 bg-slate-200 group-hover:bg-indigo-300 transition-colors"></div></div>
             <div class="pb-4 w-full">
-              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">Swift Transfer</p><p class="text-xs font-bold text-error">-$250,000</p></div>
+              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">Swift Transfer</p><p class="text-xs font-bold text-error">-₹250,000</p></div>
               <p class="text-[10px] text-slate-500 mb-2">To: Horizon Offshore (Cayman)</p>
               <div class="bg-slate-50 p-2 rounded text-[9px] text-slate-400 font-mono italic">"Consultancy Fees - Q3 Infrastructure"</div>
             </div>
@@ -631,14 +631,14 @@
           <div class="flex gap-3 cursor-pointer group">
             <div class="flex flex-col items-center"><div class="w-2 h-2 rounded-full bg-indigo-400"></div><div class="w-px flex-1 bg-slate-200 group-hover:bg-indigo-300 transition-colors"></div></div>
             <div class="pb-4 w-full">
-              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">ACH Deposit</p><p class="text-xs font-bold text-tertiary-container">+$12,400</p></div>
+              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">ACH Deposit</p><p class="text-xs font-bold text-tertiary-container">+₹12,400</p></div>
               <p class="text-[10px] text-slate-500 mb-2">From: Retail Merchant AC-4</p>
             </div>
           </div>
           <div class="flex gap-3 cursor-pointer group">
             <div class="flex flex-col items-center"><div class="w-2 h-2 rounded-full bg-error"></div></div>
             <div class="w-full">
-              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">Wire Transfer</p><p class="text-xs font-bold text-error">-$410,000</p></div>
+              <div class="flex justify-between items-start mb-1"><p class="text-xs font-bold text-on-surface">Wire Transfer</p><p class="text-xs font-bold text-error">-₹410,000</p></div>
               <p class="text-[10px] text-slate-500">To: Private Wallet (0x4a...f2e)</p>
             </div>
           </div>
@@ -732,7 +732,7 @@
           </div>
           <div class="flex gap-4">
             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center"><span class="text-xs font-bold text-primary">03</span></div>
-            <div><h4 class="text-sm font-bold text-on-surface mb-1">Value Rounding Pattern</h4><p class="text-sm text-on-surface-variant leading-relaxed">Transactions exhibit 92% perfect-integer rounding (e.g., $50,000.00), inconsistent with logistics invoice structures.</p></div>
+            <div><h4 class="text-sm font-bold text-on-surface mb-1">Value Rounding Pattern</h4><p class="text-sm text-on-surface-variant leading-relaxed">Transactions exhibit 92% perfect-integer rounding (e.g., ₹50,000.00), inconsistent with logistics invoice structures.</p></div>
           </div>
         </div>
         <div class="mt-10 p-4 border-l-4 border-tertiary-container bg-tertiary-fixed/10 rounded-r-lg">
@@ -740,7 +740,7 @@
             <span class="material-symbols-outlined text-tertiary-container text-lg">lightbulb</span>
             <span class="text-xs font-bold text-tertiary-container uppercase tracking-wider">Suggested Next Action</span>
           </div>
-          <p class="text-sm text-on-tertiary-fixed-variant">Request Source of Wealth (SOW) documentation for recent inflows exceeding $250k.</p>
+          <p class="text-sm text-on-tertiary-fixed-variant">Request Source of Wealth (SOW) documentation for recent inflows exceeding ₹250k.</p>
         </div>
       </div>
       <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm">
@@ -1122,11 +1122,11 @@ function navigate(page) {
 
 // ── Live Feed ────────────────────────────────────────────────────────────
 const TX_DATA = [
-  { risk: 89, riskCls: 'bg-error-container text-on-error-container', entity: 'GlobalTrade Logistics Inc.', id: 'TX-9021-X992', amount: '$14,500.00', currency: 'USD', origin: 'Panama (KYC-B)', time: 'Just now', critical: false },
+  { risk: 89, riskCls: 'bg-error-container text-on-error-container', entity: 'GlobalTrade Logistics Inc.', id: 'TX-9021-X992', amount: '₹14,500.00', currency: 'USD', origin: 'Panama (KYC-B)', time: 'Just now', critical: false },
   { risk: 12, riskCls: 'bg-tertiary-fixed text-on-tertiary-fixed-variant', entity: 'Elena Rodriguez', id: 'TX-1182-A004', amount: '€842.10', currency: 'EUR', origin: 'Spain', time: '12s ago', critical: false },
-  { risk: 96, riskCls: 'bg-error text-white', entity: 'CryptoPulse Exchange', id: 'TX-7712-C841', amount: '$52,000.00', currency: 'BTC Equiv.', origin: 'Unmapped Wallet', time: '45s ago', critical: true },
-  { risk: 41, riskCls: 'bg-surface-container-highest text-on-surface-variant', entity: 'Markham & Sons', id: 'TX-8821-M110', amount: '$2,410.00', currency: 'USD', origin: 'United States', time: '1m ago', critical: false },
-  { risk: 77, riskCls: 'bg-error-container text-on-error-container', entity: 'NexGen Holdings Ltd', id: 'TX-3312-N221', amount: '$31,000.00', currency: 'USD', origin: 'Cyprus (KYC-C)', time: '2m ago', critical: false },
+  { risk: 96, riskCls: 'bg-error text-white', entity: 'CryptoPulse Exchange', id: 'TX-7712-C841', amount: '₹52,000.00', currency: 'BTC Equiv.', origin: 'Unmapped Wallet', time: '45s ago', critical: true },
+  { risk: 41, riskCls: 'bg-surface-container-highest text-on-surface-variant', entity: 'Markham & Sons', id: 'TX-8821-M110', amount: '₹2,410.00', currency: 'USD', origin: 'United States', time: '1m ago', critical: false },
+  { risk: 77, riskCls: 'bg-error-container text-on-error-container', entity: 'NexGen Holdings Ltd', id: 'TX-3312-N221', amount: '₹31,000.00', currency: 'USD', origin: 'Cyprus (KYC-C)', time: '2m ago', critical: false },
   { risk: 22, riskCls: 'bg-tertiary-fixed text-on-tertiary-fixed-variant', entity: 'Petra Novak', id: 'TX-5501-P009', amount: '£1,200.00', currency: 'GBP', origin: 'Czech Republic', time: '3m ago', critical: false },
 ];
 

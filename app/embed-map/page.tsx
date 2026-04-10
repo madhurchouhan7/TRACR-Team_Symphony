@@ -12,7 +12,8 @@ export default function EmbedMapPage() {
   }, [])
 
   return (
-    <div className="w-full h-screen bg-[#020617] m-0 p-0 overflow-hidden">
+    <div className="w-full h-screen bg-[var(--bg-primary)] m-0 p-0 overflow-hidden relative">
+      <div className="absolute inset-0 mesh-bg opacity-40 pointer-events-none" />
       {HeatmapComponent ? (
         <HeatmapComponent 
           onCountryClick={(iso: string) => {
@@ -21,8 +22,8 @@ export default function EmbedMapPage() {
           }} 
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-emerald-500 font-mono animate-pulse">
-          Initializing Map Connect...
+        <div className="w-full h-full flex items-center justify-center text-gray-400 font-mono text-sm animate-pulse">
+          Initializing Engine...
         </div>
       )}
     </div>

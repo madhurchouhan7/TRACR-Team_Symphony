@@ -2,16 +2,27 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #020617;
-  --bg-secondary: #0a0f1e;
-  --accent-green: #10b981;
-  --accent-cyan: #06b6d4;
-  --accent-red: #ef4444;
-  --glass-bg: rgba(10, 15, 30, 0.6);
-  --glass-border: rgba(16, 185, 129, 0.15);
-  --glow-green: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.2);
-  --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.5), 0 0 60px rgba(6, 182, 212, 0.2);
-  --glow-red: 0 0 20px rgba(239, 68, 68, 0.7), 0 0 60px rgba(239, 68, 68, 0.3);
+  /* Apple/Stripe-inspired Deep Minimalist Dark Mode */
+  --bg-primary: #050505;
+  --bg-secondary: #0E0E11;
+  --bg-tertiary: #14151A;
+  
+  /* Antigravity Accents */
+  --accent-primary: #6366F1; /* Indigo */
+  --accent-cyan: #22D3EE;
+  --accent-safe: #34D399; /* Mint green */
+  --accent-alert: #FB7185; /* Coral red */
+  
+  /* Glass and Borders */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border-hover: rgba(255, 255, 255, 0.12);
+  
+  /* Glows - Diffused and Elegant */
+  --glow-indigo: 0 0 40px rgba(99, 102, 241, 0.15), 0 0 100px rgba(99, 102, 241, 0.05);
+  --glow-safe: 0 0 30px rgba(52, 211, 153, 0.15);
+  --glow-alert: 0 0 40px rgba(251, 113, 133, 0.2);
 }
 
 * {
@@ -22,48 +33,48 @@
 
 html {
   scroll-behavior: smooth;
+  /* Use system font smoothing for ultra-crisp text */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: var(--bg-primary);
-  color: #e2e8f0;
+  color: #F1F1F4; /* Soft white */
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar */
+/* Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-green);
-  border-radius: 2px;
+  background: #27272A;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3F3F46;
 }
 
-/* Glass panel */
+/* Premium Glass Panel */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass:hover {
+  border-color: var(--glass-border-hover);
+  background: var(--glass-bg-hover);
 }
 
-/* Neon text glow */
-.glow-green {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
-  color: var(--accent-green);
-}
-
-.glow-cyan {
-  text-shadow: 0 0 10px rgba(6, 182, 212, 0.8), 0 0 30px rgba(6, 182, 212, 0.4);
-  color: var(--accent-cyan);
-}
-
-/* Scanning animation for CTA */
+/* Animations */
 @keyframes scan {
   0% { transform: translateY(-100%); opacity: 0; }
   50% { opacity: 1; }
@@ -72,41 +83,30 @@ body {
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  50% { opacity: 0.3; }
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 1; }
-  100% { transform: scale(2); opacity: 0; }
-}
-
-@keyframes scroll-up {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-@keyframes grid-flash {
-  0%, 100% { border-color: rgba(16, 185, 129, 0.2); box-shadow: none; }
-  50% { border-color: rgba(239, 68, 68, 0.8); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .animate-blink {
-  animation: blink 1.2s ease-in-out infinite;
+  animation: blink 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.animate-scan-line {
-  animation: scan 2s ease-in-out infinite;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-/* Globe suspense spinner */
+/* Globe Loader */
 .globe-loader {
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 1.5px solid rgba(16,185,129,0.15);
-  border-top-color: #10b981;
-  animation: spin 1.2s linear infinite;
-  box-shadow: 0 0 30px rgba(16,185,129,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top-color: var(--accent-cyan);
+  animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
 }
 
 @keyframes spin {
@@ -117,36 +117,31 @@ body {
   font-family: 'Roboto Mono', monospace;
 }
 
-/* Gradient mesh background */
+/* Diffused Mesh Background (Antigravity feel) */
 .mesh-bg {
   background: 
-    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 30% at 10% 70%, rgba(16, 185, 129, 0.04) 0%, transparent 40%),
+    radial-gradient(ellipse 60% 50% at 50% -20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(34, 211, 238, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
     var(--bg-primary);
 }
 
-/* Grid overlay */
+/* Subtle Grid overlay */
 .grid-overlay {
   background-image: 
-    linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
 }
 
-/* Feed new-item slide-in (replaces AnimatePresence per-item) */
-@keyframes feedIn {
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-/* Promote globe canvas to its own GPU layer */
+/* GPU Optimization */
 canvas {
   will-change: transform;
   contain: strict;
 }
 
-/* Reduce paint cost on static decorative elements */
 .glass {
   will-change: auto;
   contain: layout style;

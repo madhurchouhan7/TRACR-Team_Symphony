@@ -48,7 +48,16 @@ const MOCK_STATE_NODES: Record<string, Array<{name: string; lat: number; lng: nu
     { name: 'Karnataka', lat: 15.31, lng: 75.71, isHighRisk: false, isHub: false },
     { name: 'Gujarat', lat: 22.25, lng: 71.19, isHighRisk: true, isHub: false },
     { name: 'Tamil Nadu', lat: 11.12, lng: 78.65, isHighRisk: false, isHub: false },
+    { name: 'Kerala', lat: 10.85, lng: 76.27, isHighRisk: false, isHub: false },
     { name: 'Rajasthan', lat: 27.02, lng: 74.21, isHighRisk: true, isHub: false },
+    { name: 'Punjab', lat: 31.14, lng: 75.34, isHighRisk: true, isHub: false },
+    { name: 'Uttar Pradesh', lat: 26.84, lng: 80.94, isHighRisk: true, isHub: false },
+    { name: 'Telangana', lat: 18.11, lng: 79.01, isHighRisk: false, isHub: false },
+    { name: 'West Bengal', lat: 22.98, lng: 87.85, isHighRisk: true, isHub: false },
+    { name: 'Madhya Pradesh', lat: 22.97, lng: 78.65, isHighRisk: false, isHub: false },
+    { name: 'Assam', lat: 26.20, lng: 92.93, isHighRisk: false, isHub: false },
+    { name: 'Odisha', lat: 20.95, lng: 85.09, isHighRisk: false, isHub: false },
+    { name: 'Bihar', lat: 25.09, lng: 85.31, isHighRisk: false, isHub: false },
   ],
   cn: [
     { name: 'Shanghai', lat: 31.22, lng: 121.46, isHighRisk: true, isHub: true },
@@ -227,27 +236,64 @@ export default function DrillDownMap({ countryIso2, countryName, onBack }: Drill
             }).addTo(map)
           }
 
-          // ── Plot DFS nodes & edges ──
+          // ── Plot Algorithmic Patterns (Circuling & Smurfing) ──
           const nodes = MOCK_STATE_NODES[countryIso2] || MOCK_STATE_NODES['default']
 
-          // Draw DFS chain arcs
-          for (let i = 0; i < nodes.length - 1; i++) {
-            const src = nodes[i], dst = nodes[i + 1]
+          // Helper to draw directed patterned edges
+          const drawEdge = (src: any, dst: any, color: string, weight: number, dashArray?: string, opacity: number = 0.85) => {
+            if (!src || !dst) return;
+            
+            // Render glow background layer
             L.polyline([[src.lat, src.lng], [dst.lat, dst.lng]], {
-              color: dst.isHighRisk ? '#ef4444' : '#10b981',
-              weight: dst.isHighRisk ? 2.5 : 2,
-              opacity: 0.85,
-              dashArray: dst.isHighRisk ? '6 4' : undefined,
+              color, weight: weight * 3.5, opacity: opacity * 0.25
             }).addTo(map)
+
+            // Render primary sharply detailed foreground layer
+            L.polyline([[src.lat, src.lng], [dst.lat, dst.lng]], {
+              color, weight, opacity, dashArray,
+              className: dashArray ? 'animated-edge-flow' : ''
+            }).addTo(map)
+
+            const midLat = (src.lat + dst.lat) / 2
+            const midLng = (src.lng + dst.lng) / 2
+            const angle = Math.atan2(src.lat - dst.lat, dst.lng - src.lng) * (180 / Math.PI)
+            
+            const arrowHtml = `<div style="transform: rotate(${angle}deg); width: 14px; height: 14px; display: flex; align-items: center; justify-content: center; opacity: ${opacity};"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px ${color});"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>`
+            const arrowIcon = L.divIcon({ className: '', html: arrowHtml, iconSize: [14, 14], iconAnchor: [7, 7] })
+            L.marker([midLat, midLng], { icon: arrowIcon, interactive: false }).addTo(map)
           }
 
-          // DFS back-edge (cycle indicator)
-          if (nodes.length > 3) {
-            L.polyline(
-              [[nodes[nodes.length - 1].lat, nodes[nodes.length - 1].lng], [nodes[0].lat, nodes[0].lng]],
-              { color: '#ef4444', weight: 1.5, opacity: 0.45, dashArray: '3 7' }
-            ).addTo(map)
+          // ALGORITHM 1: CIRCULAR TRADING (Layering Ring)
+          const highRiskNodes = nodes.filter(n => n.isHighRisk)
+          if (highRiskNodes.length >= 2) {
+            for (let i = 0; i < highRiskNodes.length; i++) {
+              const src = highRiskNodes[i]
+              const dst = highRiskNodes[(i + 1) % highRiskNodes.length]
+              drawEdge(src, dst, '#ef4444', 2.5, '4 6', 0.9) // Red dashed ring (Circular Trading)
+            }
           }
+
+          // ALGORITHM 2: SMURFING (Structuring into Hub)
+          const originNode = nodes.find(n => !n.isHighRisk && !n.isHub)
+          const hubNode = nodes.find(n => n.isHub) || nodes[0]
+          const smurfs = nodes.filter(n => !n.isHighRisk && n !== originNode && n !== hubNode)
+
+          if (originNode && hubNode && smurfs.length > 0) {
+            smurfs.forEach(smurf => {
+              // Origin -> Smurf (Placement)
+              drawEdge(originNode, smurf, '#3b82f6', 1.5, '2 4', 0.6) 
+              // Smurf -> Hub (Integration)
+              drawEdge(smurf, hubNode, '#8b5cf6', 2, undefined, 0.9) 
+            })
+          }
+
+          // Fallback connection for remaining disconnected nodes
+          const connected = new Set([...highRiskNodes, originNode, hubNode, ...smurfs])
+          nodes.forEach(n => {
+            if (!connected.has(n)) {
+               drawEdge(n, hubNode, '#10b981', 1.5, undefined, 0.7)
+            }
+          })
 
           // Draw DFS circle markers
           nodes.forEach((node, idx) => {
@@ -306,6 +352,12 @@ export default function DrillDownMap({ countryIso2, countryName, onBack }: Drill
           0%, 100% { transform: scale(1); opacity: 0.6; }
           50% { transform: scale(1.5); opacity: 0.15; }
         }
+        @keyframes dash-flow {
+          to { stroke-dashoffset: -30; }
+        }
+        path.animated-edge-flow {
+          animation: dash-flow 0.8s linear infinite;
+        }
       `}</style>
 
       {/* Map canvas */}
@@ -349,33 +401,33 @@ export default function DrillDownMap({ countryIso2, countryName, onBack }: Drill
         </button>
       </motion.div>
 
-      {/* DFS Legend */}
+      {/* Algorithmic Legend */}
       <motion.div
         initial={{ opacity: 0, x: 16 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.4, delay: 0.6 }}
         className="absolute bottom-6 right-4 z-30 font-mono text-[10px] space-y-1.5 bg-[#020617]/90 border border-emerald-900/30 rounded-lg p-3 pointer-events-none"
       >
-        <div className="text-slate-500 uppercase tracking-widest mb-2 text-[9px]">DFS Legend</div>
+        <div className="text-slate-500 uppercase tracking-widest mb-2 text-[9px]">AML Algorithmic Detection</div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-blue-500 border border-white/30" />
-          <span className="text-slate-400">Primary Hub</span>
+          <span className="text-slate-400">Primary Hub/Shell</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-red-500 border border-white/30" />
-          <span className="text-red-400">High-Risk Node</span>
+          <span className="text-red-400">Flagged Target</span>
+        </div>
+        <div className="flex items-center gap-2 pt-1 border-t border-white/10">
+          <div className="w-5 h-px bg-red-500 opacity-90" style={{ borderTop: '2px dashed #ef4444', background: 'none' }} />
+          <span className="text-red-400 font-bold">Circular Trading</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-violet-500 border border-white/30" />
-          <span className="text-slate-400">Standard Node</span>
-        </div>
-        <div className="flex items-center gap-2 pt-1 mt-1 border-t border-white/10">
-          <div className="w-5 h-px bg-emerald-500" />
-          <span className="text-slate-400">DFS Edge</span>
+          <div className="w-5 h-px bg-blue-500 opacity-60" style={{ borderTop: '1.5px dashed #3b82f6', background: 'none' }} />
+          <span className="text-blue-400">Smurfing (Placement)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-5 h-px bg-red-500 opacity-70" style={{ borderTop: '1px dashed #ef4444', background: 'none' }} />
-          <span className="text-red-400">Flagged Edge</span>
+          <div className="w-5 h-px bg-purple-500 opacity-90" />
+          <span className="text-purple-400">Smurfing (Integration)</span>
         </div>
       </motion.div>
     </div>

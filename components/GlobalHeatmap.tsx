@@ -113,10 +113,27 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
   // Drill-down: store selected country (ISO2 + name) — null = global view
   const [drillCountry, setDrillCountry] = useState<{ iso2: string; name: string } | null>(null)
 
+  const [position, setPosition] = useState({ coordinates: [0, 10] as [number, number], zoom: 1 })
+  const [filterActive, setFilterActive] = useState(false)
+
   useEffect(() => {
     setTimeout(() => setData(mockData), 500)
     const interval = setInterval(() => setActiveFraud(p => !p), 2000)
-    return () => clearInterval(interval)
+
+    const handleMessage = (e: MessageEvent) => {
+      if (!e.data || !e.data.cmd) return;
+      const cmd = e.data.cmd;
+      if (cmd === 'zoom_in') setPosition(p => ({ ...p, zoom: Math.min(p.zoom * 1.5, 8) }))
+      if (cmd === 'zoom_out') setPosition(p => ({ ...p, zoom: Math.max(p.zoom / 1.5, 1) }))
+      if (cmd === 'zoom_reset') setPosition({ coordinates: [0, 10], zoom: 1 })
+      if (cmd === 'toggle_filter') setFilterActive(prev => !prev)
+    }
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('message', handleMessage)
+    }
   }, [])
 
   const dataMap = useMemo(() => {
@@ -197,7 +214,19 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
               height={450}
               className="w-full h-full"
             >
-              <ZoomableGroup>
+              <defs>
+                <marker id="arrow-fraud" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                </marker>
+                <marker id="arrow-safe" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+                </marker>
+              </defs>
+              <ZoomableGroup
+                zoom={position.zoom}
+                center={position.coordinates as [number, number]}
+                onMoveEnd={({ coordinates, zoom }) => setPosition({ coordinates: coordinates as [number, number], zoom })}
+              >
                 <Geographies geography={GLOBAL_GEO_URL}>
                   {({ geographies }) =>
                     geographies.map((geo) => {
@@ -209,6 +238,11 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
 
                       let fill = cData ? colorScale(cData.volume) : '#0f172a'
                       let stroke = isHighRisk ? '#ef4444' : '#1e293b'
+
+                      if (filterActive && !isHighRisk) {
+                        fill = '#020617'
+                        stroke = '#020617' // hide borders of clean countries to emphasize network
+                      }
 
                       return (
                         <Geography
@@ -250,7 +284,9 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
                 </Geographies>
 
                 {/* Animated Flow Arcs */}
-                {mockFlows.map((flow) => (
+                {mockFlows
+                  .filter(flow => !filterActive || flow.isFraud)
+                  .map((flow) => (
                   <g key={flow.id}>
                     <Line
                       from={flow.src} to={flow.dst}
@@ -262,6 +298,7 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
                       from={flow.src} to={flow.dst}
                       stroke={flow.isFraud ? '#ef4444' : '#10b981'}
                       strokeWidth={2} strokeLinecap="round"
+                      markerEnd={flow.isFraud ? 'url(#arrow-fraud)' : 'url(#arrow-safe)'}
                       style={{
                         filter: `drop-shadow(0 0 6px ${flow.isFraud ? '#ef4444' : '#10b981'})`,
                         strokeDasharray: 200,
@@ -273,7 +310,9 @@ export default function GlobalHeatmap({ onCountryClick }: { onCountryClick?: (is
                 ))}
 
                 {/* DFS Nodes */}
-                {dfsNodes.map((node) => (
+                {dfsNodes
+                  .filter(node => !filterActive || node.isHighRisk)
+                  .map((node) => (
                   <Marker key={node.id} coordinates={node.coordinates}>
                     {node.isHighRisk && (
                       <circle r={8} fill="rgba(239, 68, 68, 0.3)" />
